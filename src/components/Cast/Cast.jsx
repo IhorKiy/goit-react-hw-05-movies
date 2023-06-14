@@ -1,5 +1,7 @@
-import { useState, useEffect } from 'react';
+
 import { useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { getMoviesCast } from 'servises/serviceAPI';
 import s from './Cast.module.css';
 
@@ -42,3 +44,7 @@ const Cast = () => {
   );
 };
 export default Cast;
+
+Cast.propTypes = {
+   MoviesID: PropTypes.string,
+};
