@@ -1,0 +1,21 @@
+.linkBack{
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+.block{
+    display: flex;
+ margin-left: 15px;
+
+    border: 2px;
+}
+
+.block1{
+    vertical-align: bottom;
+}
+
+.block2 {
+    margin-right: 15px;
+    padding-left: 15px ;
+    background-color: rgb(197, 185, 185);
+}
