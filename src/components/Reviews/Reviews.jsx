@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
 import { useParams } from 'react-router-dom';
 import { getMoviesReview } from 'servises/serviceAPI';
+import PropTypes from 'prop-types';
 
 const Reviews = () => {
      const { MoviesID } = useParams();
@@ -39,3 +40,7 @@ const Reviews = () => {
 }
 
 export default Reviews
+
+Reviews.propTypes = {
+   MoviesID: PropTypes.string,
+};
