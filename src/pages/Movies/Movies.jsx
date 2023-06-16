@@ -1,49 +1,56 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { toast } from 'react-toastify';
 import { Link, useLocation, useSearchParams } from 'react-router-dom';
 import { getMoviesBySearch } from 'servises/serviceAPI';
 
 const Movies = () => {
-  const [movies, setMovie] = useState([]);
-  const [queryInpt, setQuery] = useState('');
+  const [movies, setMovies] = useState([]);
+
   const [searchParams, setSearchParams] = useSearchParams();
   const query = searchParams.get('query') ?? '';
 
+  const inputRef = useRef(null);
+
   const location = useLocation();
 
-
-
   useEffect(() => {
-    getMoviesBySearch(queryInpt)
+    getMoviesBySearch(query)
       .then(data => {
-        setMovie(data.results);
+        setMovies(data.results);
       })
       .catch(e => {
         console.error(e);
       });
-    // return () => {};
-  },[queryInpt]);
-
-  const updateSetQuery = () => {
-    setQuery(query);
-  };
-
-  
-
-  
+  }, [query]);
 
   const updateQuerryString = evt => {
-    if (evt.target.value === '') {
+    evt.preventDefault();
+    if (inputRef.current.value === '') {
+      alert('What will to search?')
+console.log('empty');
+       toast.error('What will to search?', {
+        position: 'top-right',
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: 'light',
+      });
       return setSearchParams({});
     }
-    setSearchParams({ query: evt.target.value });
+    console.log(inputRef.current.value);
+    setSearchParams({ query: inputRef.current.value });
+    inputRef.current.value = "";
   };
 
   return (
     <div>
-      <input type="text" value={query} onChange={updateQuerryString} />
-      <button type="button" onClick={() => updateSetQuery()}>
-        Search
-      </button>
+      <form onSubmit={updateQuerryString}>
+        <input type="text" ref={inputRef} placeholder="Search your movie" />
+        <button type="submit">Search</button>
+      </form>
       {movies &&
         movies.map(movie => {
           return (
